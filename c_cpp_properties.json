@@ -1,0 +1,16 @@
+{
+    "configurations": [
+        {
+            "name": "Geek_Embedded_Environment",
+            "compileCommands": "${workspaceFolder}/build/compile_commands.json",
+            "compilerPath": "arm-none-eabi-gcc",
+            "intelliSenseMode": "linux-gcc-arm",
+            "cStandard": "c11",
+            "cppStandard": "c++14",
+            "browse": {
+                "limitSymbolsToIncludedHeaders": true
+            }
+        }
+    ],
+    "version": 4
+}
