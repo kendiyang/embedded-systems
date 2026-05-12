@@ -132,9 +132,10 @@ scaffold_and_pull() {
     echo -e "${BLUE}初始化工程基础架构...${NC}"
     mkdir -p .vscode
     mkdir -p .github/skills
-    mkdir -p App/Controller App/Protocol
-    mkdir -p BSP/Driver
-    mkdir -p Core/Src Core/Inc
+    mkdir -p App
+    mkdir -p BSP
+    mkdir -p Core
+    mkdir -p Drivers
 
     if [ ! -f "bsp_bridge.h" ]; then
         echo "/* AI Context Anchor - 真理之源 */" > bsp_bridge.h
