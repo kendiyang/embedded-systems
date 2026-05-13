@@ -58,6 +58,7 @@ add_executable(${PROJECT_NAME}.elf ${ALL_SOURCES})
 target_include_directories(${PROJECT_NAME}.elf PRIVATE ${ALL_INC_DIRS})
 
 if("${TARGET_MCU}" STREQUAL "STM32")
+    target_compile_definitions(${PROJECT_NAME}.elf PRIVATE STM32 STM32F4xx)
     # STM32 参数 (Cortex-M4 示例)
     # 修复点：去除双引号！让其作为 CMake List 数组传递，避免 GCC 将所有参数当成一个连体字符串而报错
     set(MCU_FLAGS -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=hard)
@@ -73,6 +74,7 @@ if("${TARGET_MCU}" STREQUAL "STM32")
     )
 
 elseif("${TARGET_MCU}" STREQUAL "STM8")
+    target_compile_definitions(${PROJECT_NAME}.elf PRIVATE STM8 STM8S103)
     # STM8 参数 (SDCC)
     target_compile_options(${PROJECT_NAME}.elf PRIVATE -mstm8 --opt-code-size)
     
