@@ -151,10 +151,42 @@ scaffold_and_pull() {
     mkdir -p Core
     mkdir -p Drivers
 
+    # 【新增】自动生成一个初始的 main.c，防止 CMake 因找不到源文件而报错
+    if [ ! -f "App/main.c" ]; then
+        echo -e "${BLUE}生成默认入口文件 App/main.c...${NC}"
+        cat <<EOF > App/main.c
+        #include "bsp_bridge.h"
+
+        int main(void) {
+            /* MCU 初始化代码可在此处或 BSP 层调用 */
+            
+            while (1) {
+                /* RTOS 调度器启动后，此处一般不会执行 */
+            }
+        }
+EOF
+    fi
+
     if [ ! -f "bsp_bridge.h" ]; then
-        echo "/* AI Context Anchor - 真理之源 */" > bsp_bridge.h
-        echo "#pragma once" >> bsp_bridge.h
-        echo "#include \"main.h\"" >> bsp_bridge.h
+        cat > bsp_bridge.h << 'EOF'
+        #pragma once
+
+        /* AI Context Anchor - 真理之源 */
+
+        // 当在 VS Code 右下角或 CMake 中选择 STM32 时
+        #if defined(STM32) || defined(STM32F4xx)
+            #include "stm32f4xx_hal.h"
+            #include "main.h" // STM32CubeMX 生成的引脚定义
+
+        // 当选择 STM8 时
+        #elif defined(STM8) || defined(STM8S103)
+            #include "stm8s.h" // STM8 标准库头文件
+            #include "stm8s_gpio.h"
+
+        #else
+            #error "未知平台，请检查 CMake 或 c_cpp_properties.json 配置！"
+        #endif
+EOF
     fi
 
     echo -e "${BLUE}从 GitHub 拉取技能库及配置文件...${NC}"
@@ -172,7 +204,7 @@ scaffold_and_pull() {
         fi
 
         # 2. 分发 .md 技能文件
-        cp -r .temp_skills_repo/*.md .github/skills/ 2>/dev/null
+        #cp -r .temp_skills_repo/*.md .github/skills/ 2>/dev/null
         
         # 3. 注入工程级生产配置
         echo -e "${BLUE}注入工程级生产配置...${NC}"
