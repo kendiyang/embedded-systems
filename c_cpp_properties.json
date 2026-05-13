@@ -3,6 +3,13 @@
         {
             "name": "STM32_Env",
             "compileCommands": "${workspaceFolder}/build/compile_commands.json",
+            "includePath": [
+                "${workspaceFolder}",
+                "${workspaceFolder}/App",
+                "${workspaceFolder}/BSP",
+                "${workspaceFolder}/Core",
+                "${workspaceFolder}/Drivers/**"
+            ],
             "compilerPath": "arm-none-eabi-gcc",
             "intelliSenseMode": "linux-gcc-arm",
             "cStandard": "c11",
@@ -13,6 +20,13 @@
         {
             "name": "STM8_Env",
             "compileCommands": "${workspaceFolder}/build/compile_commands.json",
+            "includePath": [
+                "${workspaceFolder}",
+                "${workspaceFolder}/App",
+                "${workspaceFolder}/BSP",
+                "${workspaceFolder}/Core",
+                "${workspaceFolder}/Drivers/**"
+            ],
             "compilerPath": "sdcc",
             "intelliSenseMode": "linux-gcc-arm", // STM8 没有专属 mode，借用 gcc-arm
             "cStandard": "c99",
