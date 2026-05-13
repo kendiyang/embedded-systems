@@ -167,22 +167,19 @@ scaffold_and_pull() {
 EOF
     fi
 
-    if [ ! -f "bsp_bridge.h" ]; then
-        cat > bsp_bridge.h << 'EOF'
+    if [ ! -f "App/bsp_bridge.h" ]; then
+        cat > App/bsp_bridge.h << 'EOF'
         #pragma once
 
         /* AI Context Anchor - 真理之源 */
 
         // 当在 VS Code 右下角或 CMake 中选择 STM32 时
         #if defined(STM32) || defined(STM32F4xx)
-            #include "stm32f4xx_hal.h"
-            #include "main.h" // STM32CubeMX 生成的引脚定义
+            // STM32CubeMX 生成的引脚定义
 
         // 当选择 STM8 时
         #elif defined(STM8) || defined(STM8S103)
-            #include "stm8s.h" // STM8 标准库头文件
-            #include "stm8s_gpio.h"
-
+            // STM8 标准库头文件
         #else
             #error "未知平台，请检查 CMake 或 c_cpp_properties.json 配置！"
         #endif
@@ -209,6 +206,7 @@ EOF
         # 3. 注入工程级生产配置
         echo -e "${BLUE}注入工程级生产配置...${NC}"
         [ -f ".temp_skills_repo/copilot-instructions.md" ] && cp .temp_skills_repo/copilot-instructions.md .github/
+        [ -f ".temp_skills_repo/references" ] && cp .temp_skills_repo/references .github/skills/
         [ -f ".temp_skills_repo/c_cpp_properties.json" ] && cp .temp_skills_repo/c_cpp_properties.json .vscode/
         [ -f ".temp_skills_repo/tasks.json" ] && cp .temp_skills_repo/tasks.json .vscode/
         [ -f ".temp_skills_repo/CMakeLists.txt" ] && cp .temp_skills_repo/CMakeLists.txt ./
