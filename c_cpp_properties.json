@@ -1,15 +1,24 @@
 {
     "configurations": [
         {
-            "name": "Geek_Embedded_Environment",
+            "name": "STM32_Env",
             "compileCommands": "${workspaceFolder}/build/compile_commands.json",
             "compilerPath": "arm-none-eabi-gcc",
             "intelliSenseMode": "linux-gcc-arm",
             "cStandard": "c11",
-            "cppStandard": "c++14",
-            "browse": {
-                "limitSymbolsToIncludedHeaders": true
-            }
+            "defines": [
+                "STM32F4xx"
+            ] // 根据实际芯片修改
+        },
+        {
+            "name": "STM8_Env",
+            "compileCommands": "${workspaceFolder}/build/compile_commands.json",
+            "compilerPath": "sdcc",
+            "intelliSenseMode": "linux-gcc-arm", // STM8 没有专属 mode，借用 gcc-arm
+            "cStandard": "c99",
+            "defines": [
+                "STM8S103"
+            ]
         }
     ],
     "version": 4
