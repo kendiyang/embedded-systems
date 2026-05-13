@@ -1,22 +1,37 @@
 {
     "version": "2.0.0",
+    "inputs": [
+        {
+            "id": "selectMCU",
+            "type": "pickString",
+            "description": "请选择要编译的目标平台 (STM32/STM8)",
+            "options": [
+                "STM32",
+                "STM8"
+            ],
+            "default": "STM32"
+        }
+    ],
     "tasks": [
         {
             "label": "Build Firmware (Ninja)",
             "type": "shell",
-            "command": "cmake -B build -G Ninja && cmake --build build",
+            // 动态将你选的 MCU 传给 CMake：-DTARGET_MCU=STM32 
+            "command": "cmake -B build -G Ninja -DTARGET_MCU=${input:selectMCU} && cmake --build build",
             "group": {
                 "kind": "build",
                 "isDefault": true
             },
             "presentation": {
-                "echo": false,
-                "reveal": "silent",
+                "echo": true,
+                "reveal": "always",
                 "focus": false,
                 "panel": "shared",
                 "clear": true
             },
-            "problemMatcher": ["$gcc"]
+            "problemMatcher": [
+                "$gcc"
+            ]
         }
     ]
 }
